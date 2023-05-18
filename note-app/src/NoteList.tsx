@@ -1,12 +1,21 @@
-import { Row, Col, Stack, Button, Form } from "react-bootstrap";
+import { Row, Col, Stack, Button, Form, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ReactSelect from "react-select";
 import { useState, useMemo } from "react";
 import { Tag } from "./App";
+import styles from "./NoteList.modules.css"
+
+
+type SimplifiedNote = {
+	tags: Tag[]
+	title: string
+	id: string
+}
+
 
 type NoteListProps = {
-  availabletags: Tag[];
-  notes: Note[];
+  availableTags: Tag[];
+  notes: SimplifiedNote[];
 };
 
 export function NoteList({ availableTags }: NoteListProps) {
@@ -16,7 +25,7 @@ export function NoteList({ availableTags }: NoteListProps) {
   const filteredNotes = useMemo(() => {
     return notes.filter((note) => {
       return (
-        title === "" || note.title.toLowerCase().includes(title.toLowerCase())
+        title === "" || note.title.toLowerCase().includes(title.toLowerCase()) && (selectedTags.length ===  || selectedTags.every(tag => note.tags.some(noteTag => noteTag.id === tag.id)))
       );
     });
   }, [title, selectedTags, notes]);
@@ -74,10 +83,18 @@ export function NoteList({ availableTags }: NoteListProps) {
       <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
         {filteredNotes.map((note) => (
           <Col key={note.id}>
-            <NoteCard />
+            <NoteCard id={note.id} title={note.title} tags={note.tags} />
           </Col>
         ))}
       </Row>
     </>
   );
+}
+
+function NoteCard({id, title, tags}: SimplifiedNote ) {
+	return <Card as={Link} to={`/${id}`} className={`h-100 text-reset text-decoration-none ${styles.card} `}>
+		<Card.Body>
+
+		</Card.Body>
+	</Card>
 }
