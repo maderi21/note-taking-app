@@ -13,7 +13,7 @@ export type Note = {
 
 export type RawNote = {
   id: string;
-} & RowNoteData;
+} & RawNoteData;
 
 export type RawNoteData = {
   title: string;
@@ -61,7 +61,7 @@ function App() {
   return (
     <Container className="my-4">
       <Routes>
-        <Route path="/" element={<NoteList availabletags={tags} />} />
+        <Route path="/" element={<NoteList availableTags={tags} />} />
         <Route
           path="/new"
           element={
