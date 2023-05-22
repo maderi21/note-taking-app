@@ -8,6 +8,7 @@ import { v4 as uuidV4 } from "uuid";
 import { Note } from "./Note";
 import { NoteLayout } from "./NoteLayout";
 import { EditNote } from "./EditNote";
+import { NoteList } from "./NoteList";
 
 export type Note = {
   id: string;
@@ -20,7 +21,7 @@ export type RawNote = {
 export type RawNoteData = {
   title: string;
   markdown: string;
-  tagsIds: string[];
+  tagIds: string[];
 };
 
 export type NoteData = {
@@ -109,7 +110,7 @@ function App() {
             <NoteList
               notes={notesWithTags}
               availableTags={tags}
-              onUpdateTags={updateTag}
+              onUpdateTag={updateTag}
               onDeleteTag={deleteTag}
             />
           }
