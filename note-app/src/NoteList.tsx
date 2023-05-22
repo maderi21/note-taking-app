@@ -15,18 +15,24 @@ type SimplifiedNote = {
 
 type NoteListProps = {
   availableTags: Tag[];
-  notes: SimplifiedNote[];
+  notes: SimplifiedNote[]
+	onDeleteTag:(id: string) => void
+	onUpdateTag:(id: string, label: string) => void
 };
 
-type EditTagsModalProps ={
+type EditTagsModalProps = {
 show: boolean
 availableTags: Tag[]
 handleClose: () => void
+onDeleteTag:(id: string) => void
+onUpdateTag:(id: string, label: string) => void
 }
 
-export function NoteList({ availableTags }: NoteListProps) {
+export function NoteList({ availableTags,notes, onUpdateTag, onDeleteTag }: NoteListProps) {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [title, setTitle] = useState("");
+	const [editTagsModalIsOpen,setEdittagsModalisOpen] = useState(false)
+
 
   const filteredNotes = useMemo(() => {
     return notes.filter((note) => {
@@ -47,7 +53,7 @@ export function NoteList({ availableTags }: NoteListProps) {
             <Link to="/new">
               <Button variant="primary">Create</Button>
             </Link>
-            <Button variant="outline-secondary">Edit Tags</Button>
+            <Button onClick={() => setEdittagsModalisOpen(true)} variant="outline-secondary">Edit Tags</Button>
           </Stack>
         </Col>
       </Row>
@@ -93,7 +99,7 @@ export function NoteList({ availableTags }: NoteListProps) {
           </Col>
         ))}
       </Row>
-			<EditTagsModal show={} handleClose={} availableTags={availableTags}/>
+			<EditTagsModal show={editTagsModalIsOpen} handleClose={setEdittagsModalisOpen(false)} availableTags={availableTags} onUpdateTag={onUpdateTag} onDeleteTag={onDeleteTag}/>
     </>
   );
 }
