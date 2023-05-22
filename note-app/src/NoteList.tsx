@@ -121,7 +121,7 @@ function NoteCard({id, title, tags}: SimplifiedNote ) {
 	</Card>
 }
 
-function EditTagsModal({availableTags, handleClose, show}: EditTagsModal) {
+function EditTagsModal({availableTags, handleClose, show, onDeleteTag, onUpdateTag}: EditTagsModalProps) {
 	return <Modal show={show} onHide={handleClose}>
 		<Modal.Header closeButton>
 			<Modal.Title>Edit Tags</Modal.Title>
@@ -131,9 +131,9 @@ function EditTagsModal({availableTags, handleClose, show}: EditTagsModal) {
 {availableTags.map(tag=>{
 	<Row key={tag.id}>
 		<Col>
-		<Form.Control type="text" value={tag.label}/>
+		<Form.Control type="text" value={tag.label} onChange={e => onUpdateTag(tag.id, e.target.value)}/>
 		</Col>
-		<Col xs="auto"><Button variant="outline=danger">&times;</Button>
+		<Col xs="auto"><Button variant="outline=danger" onClick={() => onDeleteTag(tag.id)}>&times;</Button>
 		</Col>
 	</Row>
 })}
